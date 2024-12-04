@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Web Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        main {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            background-color: #f4f4f4;
+            width: 200px;
+            padding: 20px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #ddd;
+            border-radius: 4px;
+        }
+        .sidebar ul li:hover {
+            background-color: #ccc;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100%; /* Make image responsive */
+            max-width: 438px; /* Limit maximum width */
+            height: auto;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #555;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .greeting {
+            color: green;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Web Interface Example</h1>
+</header>
+
+<main>
+    <div class="sidebar">
+        <ul>
+            <li>Dashboard</li>
+            <li>Settings</li>
+            <li>Help</li>
+            <li>Profile</li>
+            <li>Logout</li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="form-container">
+            <form id="loginForm" action="#" method="POST">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAABVlBMVEX////8///8/Pzw//////73///5+fn2/////f3//vwAp91Jrsqi3ecAn9b5//3///vr//+h2+vM/f8AoNP/+//7//jPz8/e3t5Eqs3///WX193y8vIApeDu7u7MzMzm///Y///j4+O9vb2dnZ2tra19x99WtNMfmr0Ll8SUlJT/+P9zxdq3t7dAq8mfn5+JiYkAqddNudQAr9wAm9//+fAAtuIArukAnLkAmb+Dzd0Ao9OKxtedzNef0NOIysrM8fKo8PG26/Fgr8RYrNUAnOc7qL8AqPpbxORqu9mS1+z3++rr+PB3yOgRqM14ush33O8oq7wPk60Aq/BPm71OoLtgsLoAkcmC3uOa08yB0dq83uNrxM5r2eig5ephwdmq4fcZudkAkLa11eaayM1prdSQzelNlrZDi8Q7vcy45eEAha/I3+G+8P+u+/9LmKU+ue4Vnah0dHTGtku+AAAP2UlEQVR4nO2ce1vbSJbGVVXWFbsksC4I2S7bOGAcLvIFY0zPEEPTAdMihOlml2RJO73TuzO96c3O9/9nT8kyhMTdYTdDeAT1w8aSXPKjen3qXEqSJUkgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBAKB4P8AkjQJZXQJISljmhkEC6YuSRmEYKt+30d3LyBZ0zSZmmyw843V8RVV/dOfd4liU8ABje77+O6DjOlQhFXrpJ7rPztWbDyot3N7lm3bGjzt+z68e0E3KUENxPa//a6wViYyOyh8d7bETAySaDCeHiUZhDVFk9+E/TD//PBwKQqN6IT6lCIkq+RRioJQo6EMfeWo12pttsLQCFthNEuHjqnZiuk8Sn+iU2Sbw2N21D4zDk4Wjp7P91r97xnVNASDR3+cmpgWI6S8EEUzs0xGMrGeNfP9PUZYeZfJ6Y874BZ1U4d04wa/0xjekTOalFFP5k+yL3qnr8uOKcvYdwhbOAj3D9devn3nqF/1+O8A0zd1qlKs3USfCrgLbJqmjnbrhahXiF6X5Y5PkeZD0mYthIVCq5XbgTB93536Qvyhb6pElT8WZTq2DZZCqbzTPov6Z82yCurJsglaabT8pg+utvCX49T7WAT9kVRikVsRN2QE/ZwzWkYhK+vgVVXqmxJoQwbLrVavPkud++7Tl4Jk2yav9n6Yv8nadOZnDub3137YJYOZvjFfdnwYOUiHvITCCLSaYe9kztLSPnSkDCXlH7f6hVvSahXaRn1gDsvPjT1LdrjzyDhgK6amkW3jOXNggN13n74U32d7kFzk87kb5KeSOw+j83Z++ZXecZ6cPSGIOg5IYEqIYtuWL8Ml0pF0fN99+lJMOnt+lltauB2z8Jj9l389lrH5pP09gTDugyaooTt2w0aX0TxDasZP+2SBTp7mCjOQeP0x8hgiOzqSJVND7MLYJ+CfbUpMm/i+bXeci2htzsSykva4I5GZXO6FhaXPiDJJ5RBVZSSR8slWGJYdCgEHyVTv6LJN2UwYbl2W1dRrgrkmWfJxHvupGDG2rRLHQXR3Pxe1wgVZUqkO0bhjIhmT3/pdI9z6M1HutUP/DKwZIzeLbjlhqEsy6nQ09Kp9Fna7zTJCJk/YbFnFHet1yzC6/ROadnfCNQlzs9ItNfEd3GjYmsn6hX7eCF+X7YbmmJquOEOSDaOteqE+0OgdH/HdYx3EmtzOBzhQ7L17R3ySXX7z9Gn94DVrgJOlHXrMZvv5f3u2s7dHGk7qkzbrNMrPolt+t7bGfuy93XUUyphq7eTDmcsypPqkfNnM556WEbaY0kh9vcPtJJ/93ByqCaWzCZEYU/ay1b/MNEyK9E75RS46PXhzdPR9GIbG8/JQsRuKgtM/f0LAx2bRZ3JPU0fU2tmbY+ynnBG+KDO2c0Ia9DLfit4bURhuhlFrv+w4fsOGVOXrHPgdcitNdIg135z3Ty/mz7ubm9HBxXlua7thPykY/cLS94cXB1EUvi2bNitDXdj4Ogd+h9xKE7AAlG2ftcLNzc1RNBptQix+qpKldiFXn5Opmj0/676dc8iP8/Wfafrjzq00gdhissNCtxu9zg4GT2Y2u8Yao+z1Vm/5meUPafnwPH/IMqxZaP9CUj/PdjtNIC3r0EvwGVnmQC67uzQaLdCObe0ufGNRtmvJ7N93LdUmzTCazaS+Lr6lJg1bLr9pRVl27OsIcvvm5gGjjU5HZZr61/orzSHDoaWSvWgraz4SHysTNrgwuocWgiTWkenxL2e57b+Xmfoqy+Z6vQU2yJKhSdn+t7lZ+esc911yK00I+4+tsDvahprY1qSMSQetbru+NWD/Wf/bgREtL/V//bvTaFhLhdxs6k9l3NbHsrWRcRbOUl/XNN2haO50ZITRwHpijE5fXLyJuu/LJsXWkvF47MQnewe5s2g74/u+Q2XbHvxt1I+2dslF4ZAxwi6j5+BQ6KPSxNHk8mU0ekOQSiDD15yjVu6nssouD/JMUzT9+HW0sHtsPipNEG6Y7HXUyjJV63Sc491Wd18emjtvo6ZFLcdGR2Hv17L9uDRR6ZBkc93TS2bbDnvW7BrbzpDNzrSaTLZMRC/C5h5pPCpNTOj23JrRbUVvsoPLp2vG+9HLMiPEetLLqppOygfzc8TRHpsm5CTazOeN91DvGEbfaNUPSaPjHPXXsmX225vWc9Jx5EeliUaP5XdbW0vPDnPdzVHv8Nnh+dafkGLuvg3rawcHp3lj+b86FFlNIz8rp3765HaaNOyhhgdZRsm7utGfJdTKXlrD4TE7ef3bxVb047ud/2bHpvbINDn2G4h0fIe9LOQGfkexLKejqLLFSHmrPrBVRo6Dx6UJjJ1jXXN8SbH2lv/CNJkQFdsN+NMb0qtvmN2Bchk9Lk10k58sx8jGxGIWhf5DLUgRlMuoYROV6EOodpD0uDSBMkfSbA1T4gyHvtmADSZ1KBgMQo5PbVl9dJpQMA0anx3GCr9+ix6bDZnYtuY4GU3WnIat6r6TeVSaxGfPEe+sBg9NQhTF2yBx4W+btoZ0M/O47OSWCE0+RWjyKUKTTxGafIrQ5FMejiaFXPb6XoqPrtnKAHxzJiG58H76nQoZwuft5dRfp4SsH3K5rOpPbjOgYxwTsnnHMflF9lIGSZObEPgdCPASt8nEq8kmjk+W2u2faOqvP5HZTNjPQuGrT73pQMKYXwk6MZtYC4S0+FZISGNv3suBWDOXn1VTfw4dsflCPishOTGQZIxMJHGmo2lxK3oTmTX7vWz6NTHJ/rftrHM86S0fN/F/Sk2qJ/ZwbRDJ6nhkJe3iPeKRRmI70e67T1+KSefP2tvHQx1GiYb5SJFlNP4Haza3Bn5rT2I+fI8MuBeoBflQwvE+/LJZGxYlna0V2j+h1J9D19B22F3evbr/9UbM0XV+QTl4kLEb4c/xVeaZuOXHF5qwhV7hfDf1YQe+48FLI9978/Qm2zc52j4Cbm6DRh/ttJQP+zOWn/qT6HZALrYio10wbhC2OJsxI/h7/340ipdH8Wv3PX+zFX64S84oFPovB8RP/ckM00Hs4qB+ddtOH+A97IdAq3UtzfPNzeZoMwIlWqBFGEYRNOCt8/2re3/qMwMYhKm/Tokwu2HvXl48ffIhv8BzPGgSmpub7zefXsQbkrGzs7Pz5CY7gzLhP1lw3336UmRi88vDiQrI8OQ3QoITVeMN8RYOWQJNWgsqonLSCN4Hf0vUD5Eh+9U1KfWxWNN1nlnYk4Az7pwMMTaeZUy2WqfgQ1oXxEx20uIgJKFEi6QVKMLTmtRfR4149kXHxR6v8a5vuoYMBOsmbIPekuZ78CPbxORpiYQkG4O5yPSqcZK9INj6EDSRKZRwSHX8G0CGGlsAz9iho2T/rDUyfpEnxJ33PyYTJzNm6n2spMlQBOvmjRu6MGKD2dls/Ii5jM42R8bzy8l6FnjFCBSDmD+u0zzTfAAp25gra0dQ5TQ65u5avZ3baucgysaPPA/MEHonUTe/lc/X6yfMVFTfUe0pH/SQ0H2qHs+dRqPufHN/f6mZsDTmaq05H3bPck+JjxxHTn2g+QyajwlZ6IWnUAORsVOJA9GYSdSFWHwRhf3c7lCRzdRfXv85kKPJ6K/t7wrtn3VYvjG/dL2IkL0QhoX2ADTRHr4ovqaqJ7kzI/eOEoqTCZPJPdd4jIZkaSFfOANNNKQh876P+Y7RfJNYl1F0Gj0rl1n597noFwr13Q7EHfQgHes1CPmO7bC9flhY/p/62+WtMcs36fUOlnthrgfJPjJ1OfUFzjX4g+cE6GPG1jRyWD//tXd+Xv8deiDTy+VLCyNs6ujBxB1FkcbOQZlyL71msbnPUSapnyj5GGViHnhaLu4PO1AFmf70aXvT5lO1ZuehOVcsVao1wA2mTQJBBQhVzdQfngLTiufzJX7h0sOBT7IH6zUPRk3grlQl6RNZMnH1okN1/Al8Fh9pdgNqY56YKHiqoaUOrEjFjeJEiGrp0xbjc55QLJtTgeHDZxXGn/VQNCn+I0g8CugzxcnGVe7v/njO1Ukuvj/2il/58O8ELK0UIeDEgRgr077m+Jx4RkLTzURr8J+Jxfb4s2qVr3v0d0Sl9uEayJIIMw7O8JLJSBl4VeAl3ggDJF7O8CU+Z4Ine0p4tRI7KIV/BrzGLT7Oe1JALfhwvMQuobJaq5WgW7BcVLAHKzxzceE1FiUIMHZr66s8SkGLRJMgkLzKesnzAmhbhE/wuDYSDCav5t5P1/7frNx0IQoOFlehI+6iy7/eDWm9iqUSNNooYcndAIORVr3iSkmRKuvr3Ag2wLL4jm4JHuurpRIMn9o6uKjqCrhupRbUqqkLR+s3DBvGBXSFe1sJvl1FWqxW+PtuaTGOTV4NWlRL6+OU11uEbetJ8uuBEUnV2J/UYjklBeSSVlddKeWagEu4MvSVAN5NvM1G8roC3axuTPaoeZK0mNiZx8N4rElxPUmIXUh3qot3evR3w/rNVeW6D6USD0pjyf4RjHVYDPhXP2kBvZ+iyepV8IG3q9W7OvA7ZPGGP8HFa414RNpIMpaVxPxrMLCuLUlZ+VQTDOOtVHKBEnc/Ve+uO3AHVD38YawsribLEH5qYCfJMJj0vBZIH3Zz8fod98pOFl0voaKAQ/4anfjnAmGG9z/uGKSxSjC2E55cVGCMrCTNVhKlYk1KE685tpOxKG7iYxUJgs4YnqZUU5jFQeDweJ4hxTEHAs7KJM3H3IKmabK6HmsCW4o17mHG76yXYgVgx5I7tru4TTo1kTYqydcO/0vYXR1vVoIVabompasdeNhOBkewwZXgwwrjjWQnJUinJlyUFVcZLymLECVq49o4iEPOlSbJCIntxFscd3SVx5QgjszKOgReJXYqWPLGoydY4f4kjZpwqiurXqXirq/wcgVSipLn1mBMwPJiUjGPMzOMedwBY1ivuV51kSd1UAuvlGC5WKnyEbVedWHEeYurrltbKSo4nXFH4r5VqpSqJbeI405K2HPd4riYS6ZElCT8xK+8m4HremOHAV7IdStxocRbe27AZazE265qwPSBk3B6NX82XpE+KJMnG5WxJtdTbYqSNIxnX8aueixkUlZPnX94cKQx5bhb0usi7pLVtE2HfAVKj9ROwEF6bhEqFi8IvGKpWKngiudhpQgRpaK4HsQaRYIY48FSpSLBmhs8iPnpPwBjUAFCsusFUPC60GlIQDwcuFIJcnfsVYpegD3I0bygVIH3KpXSw5iz/wMwLnrQbbcUQCZSAR2CVQkyD6UUuEXXK1YrYCO4VPFKQbFYcoMSNKo+fE2kYlGBMrnCZ6QDKcBFqQhZWKWIKwr8l2ABNuCgolQCJW4bpP/H7AUCgUAgEAgEAoFAIBAIBAKBQCAQCAQCgUAgEAgEAoFAIBAIBF+N/wXQFAwiDJ8sPwAAAABJRU5ErkJggg==" alt="Placeholder Image">
+                <input type="text" id="username" name="username" placeholder="Enter your name" required>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <button type="button" id="submitBtn">Submit</button>
+                <p class="error" id="error"></p>
+                <p class="greeting" id="greeting"></p>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>Copyright © 2024 Your Company Name</p>
+</footer>
+<script>
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const greeting = document.getElementById('greeting');
+        const error = document.getElementById('error');
+
+        // Reset error and greeting messages
+        error.textContent = '';
+        greeting.textContent = '';
+
+        // Validate the inputs
+        if (username.trim() === "") {
+            error.textContent = "Please enter your username.";
+        } else if (password.length < 6) {
+            error.textContent = "Password must be at least 6 characters long.";
+        } else {
+            greeting.textContent = `Hello, ${username}!`;
+        }
+    });
+</script>
+
+</body>
+</html>
